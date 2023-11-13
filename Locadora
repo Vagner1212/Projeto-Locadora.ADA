@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+public class Locadora<T> where T : Pessoa
+{
+    private List<T> clientes;
+    private List<ItemLocadora> itensDisponiveis;
+
+    public Locadora()
+    {
+        clientes = new List<T>();
+        itensDisponiveis = new List<ItemLocadora>();
+    }
+
+    public void CadastrarCliente(string nome, string cpf)
+    {
+        T novoCliente = (T)Activator.CreateInstance(typeof(T), nome, cpf);
+        clientes.Add(novoCliente);
+        Console.WriteLine($"Cliente cadastrado: {nome}, CPF: {cpf}");
+    }
+
+    public void AdicionarItemLocadora(ItemLocadora item)
+    {
+        itensDisponiveis.Add(item);
+        Console.WriteLine($"Item adicionado ao estoque: {item.Titulo}");
+    }
+
+    public void ExibirDetalhesItensDisponiveis()
+    {
+        Console.WriteLine("Detalhes dos itens disponíveis:");
+
+        foreach (var item in itensDisponiveis)
+        {
+            if (item is IDetalhesExibiveis detalhesExibiveis)
+            {
+                Console.WriteLine($"- {item.Titulo}:");
+                detalhesExibiveis.ExibirDetalhes();
+            }
+        }
+    }
+
+    public void AlugarItemAleatorio(string nomeCliente)
+    {
+        Console.WriteLine($"{nomeCliente}, digite o título do item que deseja procurar:");
+        string tituloItem = Console.ReadLine();
+
+        ItemLocadora itemEncontrado = itensDisponiveis.Find(item => item.Titulo.Equals(tituloItem, StringComparison.OrdinalIgnoreCase));
+
+        if (itemEncontrado != null)
+        {
+            Console.WriteLine($"Item encontrado: {itemEncontrado.Titulo}");
+            Console.WriteLine("Deseja alugar? (Digite 'sim' ou 'nao'):");
+            string resposta = Console.ReadLine();
+
+            if (resposta.Equals("sim", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine($"Item {itemEncontrado.Titulo} alugado por {nomeCliente}!");
+            }
+            else
+            {
+                Console.WriteLine($"Item {itemEncontrado.Titulo} não alugado.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Item não encontrado.");
+        }
+    }
+}
