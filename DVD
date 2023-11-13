@@ -1,0 +1,16 @@
+using System;
+
+public class DVD : ItemLocadora
+{
+    public string Diretor { get; set; }
+
+    public DVD(string titulo, string diretor) : base(titulo)
+    {
+        Diretor = diretor;
+    }
+
+    public override void ExibirDetalhes()
+    {
+        Console.WriteLine($"Título: {Titulo}, Diretor: {Diretor}");
+    }
+}
