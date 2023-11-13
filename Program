@@ -1,0 +1,20 @@
+class Program
+{
+    static void Main()
+    {
+        Locadora<Cliente> minhaLocadora = new Locadora<Cliente>();
+
+        minhaLocadora.CadastrarCliente("Vagner", "123456789");
+        minhaLocadora.CadastrarCliente("Safiri", "987654321");
+
+        minhaLocadora.AdicionarItemLocadora(new DVD("Aventura nas Estrelas", "John Director"));
+        minhaLocadora.AdicionarItemLocadora(new DVD("Os Vingadores", "Joe Russo"));
+
+        minhaLocadora.ExibirDetalhesItensDisponiveis();
+
+        Console.WriteLine(); 
+
+        minhaLocadora.AlugarItemAleatorio("Vagner");
+        minhaLocadora.AlugarItemAleatorio("Safiri");
+    }
+}
