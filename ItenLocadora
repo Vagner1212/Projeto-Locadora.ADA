@@ -1,0 +1,18 @@
+using System;
+
+public interface IDetalhesExibiveis
+{
+    void ExibirDetalhes();
+}
+
+public abstract class ItemLocadora : IDetalhesExibiveis
+{
+    public string Titulo { get; set; }
+
+    protected ItemLocadora(string titulo)
+    {
+        Titulo = titulo;
+    }
+
+    public abstract void ExibirDetalhes();
+}
